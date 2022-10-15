@@ -5,7 +5,7 @@ const Home = () => {
     useEffect(()=>{
       const getQrcode=async()=>{
           try {
-            const url='http://localhost:5000/';
+            const url='https://whatsapp-bot-3srf.onrender.com/';
            const response=await fetch(url,{
               method:'GET'
             })
