@@ -1,33 +1,29 @@
-const $qrcode=require('qrcode.react');
-const Home = ({qrcode}) => {
-    const home=[
-    {
-        id:1,
-        firstName:'imran',
-        middleName:'matano',
-        lastName:'ngati'
-    },
-    {
-        id:2,
-        title:"React Js Tutorial",
-        date:"June 02, 2022 11:17:52 AM",
-        "body":"React, Django framework, Python"
-      },
-      {
-        id:3,
-        title:"The Presidency Title Race",
-        date:"June 02, 2022 11:17:52 AM",
-        "body":"Presidential Politics is "
+import { useState, useEffect } from 'react';
+import {QRCodeSVG} from 'qrcode.react';
+const Home = () => {
+    const [qrcode,setQrcode]=useState('')
+    useEffect(()=>{
+      const getQrcode=async()=>{
+          try {
+            const url='http://localhost:5000/';
+           const response=await fetch(url,{
+              method:'GET'
+            })
+            const parseRes=await response.json();
+            setQrcode(parseRes);
+            console.log(parseRes)
+        } catch (error) {
+            console.log(error);
+        }
       }
-]
+      getQrcode();
+    },[]);
     return (
        <>
         <div className='container'>
-            <div className='qrcode'>{qrcode}</div>
-            <h1>{home&&home.map(item=>{
-                <p>{item.firstName}</p>
-            })}</h1>
-        </div>
+        <p>Scan  Qrcode</p><br/>
+           <QRCodeSVG value={qrcode} />
+        </div><br/>
        </>
     )
 }
